@@ -1,0 +1,153 @@
+﻿<Window x:Class="ExcelCompareApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Rony's Excel Compare Tool" Height="600" Width="800"
+        Background="#FFE3E3E3"
+        Icon="app-icon.ico">
+    <Grid>
+        <StackPanel Margin="10">
+            <!-- File Upload Section -->
+            <Grid Margin="0,10">
+                <!-- Define Rows -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!-- First row for Excel 1 -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Second row for Excel 2 -->
+                </Grid.RowDefinitions>
+
+                <!-- Define Columns -->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Column for the button -->
+                    <ColumnDefinition Width="*"/>
+                    <!-- Column for the textbox (takes remaining space) -->
+                </Grid.ColumnDefinitions>
+
+                <!-- Excel 1 Row -->
+                <Button Content="Upload Excel 1" Click="UploadExcel1_Click" 
+                        Background="#FF526752" Foreground="White" FontWeight="Bold" 
+                        Padding="10,5" VerticalAlignment="Center" 
+                        Margin="0,5,10,5" Grid.Row="0" Grid.Column="0"/>
+                <TextBox x:Name="Excel1FilePath" IsReadOnly="True" 
+                         Background="White" Foreground="Black" BorderBrush="#FF29562B" 
+                         VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" 
+                         Margin="0,5" Padding="5" MinWidth="200"/>
+
+                <!-- Excel 2 Row -->
+                <Button Content="Upload Excel 2" Click="UploadExcel2_Click" 
+                        Background="#FF526752" Foreground="White" FontWeight="Bold" 
+                        Padding="10,5" VerticalAlignment="Center" 
+                        Margin="0,5,10,5" Grid.Row="1" Grid.Column="0"/>
+                <TextBox x:Name="Excel2FilePath" IsReadOnly="True" 
+                         Background="White" Foreground="Black" BorderBrush="#FF29562B" 
+                         VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" 
+                         Margin="0,5" Padding="5" MinWidth="200"/>
+            </Grid>
+            <!-- Sheet Mapping Section -->
+            <TextBlock Text="Sheet Mapping" FontWeight="Bold" Margin="0,10" 
+                       Foreground="#FF29562B" FontSize="16"/>
+
+            <!-- Excel 1 Sheet and Header Row -->
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <TextBlock Text="Select Excel 1 Sheet:" VerticalAlignment="Center" Margin="0,0,10,0" 
+                           Foreground="#FF29562B"/>
+                <ComboBox x:Name="Excel1Sheets" Width="150" Margin="0,0,10,0" 
+                          Background="White" Foreground="Black" BorderBrush="#FF29562B"/>
+                <TextBlock Text="Select Header Row:" VerticalAlignment="Center" Margin="0,0,10,0" 
+                           Foreground="#FF29562B"/>
+                <TextBox x:Name="Excel1HeaderRow" Width="50" Margin="0,0,10,0" Text="1" 
+                          Background="White" Foreground="Black" BorderBrush="#FF29562B"/>
+            </StackPanel>
+
+            <!-- Excel 2 Sheet and Header Row -->
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <TextBlock Text="Select Excel 2 Sheet:" VerticalAlignment="Center" Margin="0,0,10,0" 
+                           Foreground="#FF29562B"/>
+                <ComboBox x:Name="Excel2Sheets" Width="150" Margin="0,0,10,0" 
+                          Background="White" Foreground="Black" BorderBrush="#FF29562B"/>
+                <TextBlock Text="Select Header Row:" VerticalAlignment="Center" Margin="0,0,10,0" 
+                           Foreground="#FF29562B"/>
+                <TextBox x:Name="Excel2HeaderRow" Width="50" Margin="0,0,10,0" Text="1" 
+                          Background="White" Foreground="Black" BorderBrush="#FF29562B"/>
+            </StackPanel>
+
+            <!-- Add Mapping Button -->
+            <Button Content="Add Mapping" Click="AddSheetMapping_Click" 
+        Background="#FF526752" Foreground="White" FontWeight="Bold" 
+        Padding="10,5" HorizontalAlignment="Center" VerticalAlignment="Center" 
+        Margin="0,10"/>
+
+            <!-- Mapped Sheets List -->
+            <ListView x:Name="SheetMappings" Margin="0,10" Height="150" 
+                      Background="White" BorderBrush="#FF29562B">
+                <ListView.View>
+                    <GridView>
+                        <!-- Excel 1 Sheet Column -->
+                        <GridViewColumn Header="Excel 1 Sheet" DisplayMemberBinding="{Binding Excel1Sheet}">
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="Excel 1 Sheet" Foreground="#FF29562B" FontWeight="Bold"/>
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                        </GridViewColumn>
+
+                        <!-- Excel 1 Header Row Column -->
+                        <GridViewColumn Header="Excel 1 Header Row" DisplayMemberBinding="{Binding Excel1HeaderRow}">
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="Excel 1 Header Row" Foreground="#FF29562B" FontWeight="Bold"/>
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                        </GridViewColumn>
+
+                        <!-- Excel 2 Sheet Column -->
+                        <GridViewColumn Header="Excel 2 Sheet" DisplayMemberBinding="{Binding Excel2Sheet}">
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="Excel 2 Sheet" Foreground="#FF29562B" FontWeight="Bold"/>
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                        </GridViewColumn>
+
+                        <!-- Excel 2 Header Row Column -->
+                        <GridViewColumn Header="Excel 2 Header Row" DisplayMemberBinding="{Binding Excel2HeaderRow}">
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="Excel 2 Header Row" Foreground="#FF29562B" FontWeight="Bold"/>
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                        </GridViewColumn>
+
+                        <!-- Action Column -->
+                        <GridViewColumn Header="Action">
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="Action" Foreground="#FF29562B" FontWeight="Bold"/>
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Remove" Click="RemoveMapping_Click" 
+                                            Background="#FFD32F2F" Foreground="White" FontWeight="Bold"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <!-- Column Selection for Mapped Sheets -->
+            <!-- Wrap StackPanel in a Border to apply BorderBrush -->
+            <Border BorderBrush="#FF526752" BorderThickness="1" Margin="0,10">
+                <StackPanel x:Name="ColumnSelectionPanel" Background="White"/>
+            </Border>
+
+            <!-- Compare and Download -->
+            <Button Content="Compare and Download" Click="CompareAndDownload_Click" 
+        Background="#FF516C26" Foreground="White" FontWeight="Bold" 
+        Padding="10,5" HorizontalAlignment="Center" VerticalAlignment="Center" 
+        Margin="0,10"/>
+        </StackPanel>
+    </Grid>
+</Window>
